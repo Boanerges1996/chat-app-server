@@ -15,13 +15,13 @@ const registerUser = async (req, res)=>{
         }
 
         //Verify User
-        const verifyUser = await User.findOne({username:req.body.username})
+        const verifyUser = await User.findOne({email:req.body.email})
 
         if(verifyUser===null){
             const user = new User(user_info)
             try{
                 let savedUser = await user.save()
-                res.send({...savedUser._doc,logged:true})
+                
             }
             catch(err){
                 res.send(err)
@@ -39,7 +39,7 @@ const login =async (req,res)=>{
         res.send({message:"Please provide a body"})
     }
     else{
-        const verifyUser = await User.findOne({username:req.body.username})
+        const verifyUser = await User.findOne({email:req.body.email})
         if(verifyUser===null){
             res.send({message:"users account doesnt exist",logged:false})
         }
@@ -121,8 +121,7 @@ const searchUser = async (req,res)=>{
         }
         catch(err){
             res.send(err)
-        }
-        
+        }       
     }
 }
 
